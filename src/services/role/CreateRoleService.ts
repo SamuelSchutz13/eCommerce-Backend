@@ -22,4 +22,3 @@ class CreateRoleService {
 }
 
 export { CreateRoleService };
-
