@@ -4,7 +4,7 @@ import { CreateProductController } from '../controllers/product/CreateProductCon
 import { ListProductController } from '../controllers/product/ListProductController';
 import multer from 'multer';
 import uploadConfig from '../config/multer';
-import { isModuleNamespaceObject } from 'util/types';
+import { DeleteProductController } from '../controllers/product/DeleteProductController';
 
 const upload = multer(uploadConfig.upload('./tmp'));
 const router = Router();
@@ -17,5 +17,7 @@ router.post('/', [
 ], upload.single('file'), new CreateProductController().handle);
 
 router.get('/', new ListProductController().handle);
+
+router.delete('/:id', new DeleteProductController().handle);
 
 export default router;
