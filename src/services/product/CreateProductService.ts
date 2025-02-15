@@ -10,6 +10,16 @@ interface ProductRequest {
 
 class CreateProductService {
     async execute({ name, description, price, stock_quantity, image }: ProductRequest) {
+        const productsAlreadyExists = await prismaClient.products.findFirst({
+            where: {
+              name: name,
+            },
+        });
+ 
+        if(productsAlreadyExists) {
+            throw new Error('Product already exists');
+        }
+
         const product = await prismaClient.products.create({
             data: {
                 name: name,
