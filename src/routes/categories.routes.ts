@@ -15,6 +15,8 @@ router.get('/', new ListCategoryController().handle);
 
 router.delete('/:id', new DeleteCategoryController().handle);
 
-router.put('/:id', new UpdateCategoryController().handle);
+router.put('/:id', [
+    body('name').isString().notEmpty().withMessage('Name is required'),
+], new UpdateCategoryController().handle);
 
 export default router;
