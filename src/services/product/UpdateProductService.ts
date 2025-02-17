@@ -23,16 +23,18 @@ class UpdateProductService {
             throw new Error("Product does not exists");
         }
 
-        if(productExists.image_url) {
-            const filePath = path.join(__dirname, "..", "..", "..", "tmp", productExists.image_url);
-
-            try {
-                await fs.unlink(filePath);
-            } catch(err) {
-                throw new Error("Error deleting product image");
+        if(!image !== undefined) {
+            if(productExists.image_url) {
+                const filePath = path.join(__dirname, "..", "..", "..", "tmp", productExists.image_url);
+    
+                try {
+                    await fs.unlink(filePath);
+                } catch(err) {
+                    throw new Error("Error deleting product image");
+                }
             }
         }
-
+    
         const product = await prismaClient.products.update({
             where: {
                 id: Number(product_id)

@@ -15,7 +15,7 @@ router.get('/', new ListCategoryController().handle);
 
 router.delete('/:id', new DeleteCategoryController().handle);
 
-router.put('/:id', [
+router.patch('/:id', [
     body('name').isString().notEmpty().withMessage('Name is required'),
 ], new UpdateCategoryController().handle);
 
