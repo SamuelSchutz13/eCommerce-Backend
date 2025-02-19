@@ -3,10 +3,10 @@ import { DeleteDiscountService } from '../../services/discount/DeleteDiscountSer
 
 class DeleteDiscountController {
     async handle(req: Request, res: Response) {
-        const  discount_id = req.params;
+        const discount_id = req.params.id;
 
         const deleteDiscountService = new DeleteDiscountService();
-        const discount = await deleteDiscountService.execute({discount_id});
+        const discount = await deleteDiscountService.execute({ discount_id });
 
         return res.json(discount);
     }

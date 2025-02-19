@@ -14,7 +14,7 @@ class DeleteDiscountService {
 
         const discount = await prismaClient.discount.delete({
             where: {
-                id: discount_id
+                id: Number(discount_id)
             }
         });
 
