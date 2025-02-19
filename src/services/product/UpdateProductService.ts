@@ -9,10 +9,11 @@ interface ProductRequest {
     price: number;
     image: string;
     stock_quantity: number;
+    categoriesArray: any;
 }
 
 class UpdateProductService {
-    async execute({product_id, name, description, price, image, stock_quantity}: ProductRequest) {
+    async execute({product_id, name, description, price, image, stock_quantity, categoriesArray}: ProductRequest) {
         const productExists = await prismaClient.products.findFirst({
             where: {
                 id: Number(product_id)
@@ -34,21 +35,31 @@ class UpdateProductService {
                 }
             }
         }
-    
-        const product = await prismaClient.products.update({
-            where: {
-                id: Number(product_id)
-            },
-            data: {
-                name: name,
-                description: description,
-                price: price,
-                image_url: image,
-                stock_quantity: Number(stock_quantity),
-            }
-        });
 
-        return product;
+        if(!categoriesArray == false) {
+            const product = await prismaClient.products.update({
+                where: {
+                    id: Number(product_id)
+                },
+                data: {
+                    name: name,
+                    description: description,
+                    price: price,
+                    image_url: image,
+                    stock_quantity: Number(stock_quantity),
+                    categories: categoriesArray && categoriesArray.length > 0 ? {
+                        deleteMany: {},
+                        create: categoriesArray.map(categoryId => ({
+                            category: {
+                                connect: { id: Number(categoryId)}
+                            }
+                        }))
+                    } : undefined
+                }
+            });
+            
+            return product;
+        }
     }
 }
 
