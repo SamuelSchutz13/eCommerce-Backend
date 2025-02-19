@@ -4,6 +4,7 @@ import { body } from 'express-validator';
 import { ListAllDiscountController } from '../controllers/discount/ListAllDiscountController';
 import { ListDiscountController } from '../controllers/discount/ListDiscountController';
 import { DeleteDiscountController } from '../controllers/discount/DeleteDiscountController';
+import { UpdateDiscountController } from '../controllers/discount/UpdateDiscountController';
 
 const router = Router();
 
@@ -19,5 +20,9 @@ router.get('/', new ListAllDiscountController().handle);
 router.get('/:id', new ListDiscountController().handle);
 
 router.delete('/:id', new DeleteDiscountController().handle);
+
+router.patch('/:id', [
+    body('name').isString().notEmpty().optional().withMessage('Name is required'),
+], new UpdateDiscountController().handle);
 
 export default router;
