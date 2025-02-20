@@ -5,7 +5,8 @@ import rolesRoutes from './roles.routes';
 import userRoutes from './user.routes';
 import productsRoutes from './products.routes';
 import categoriesRoutes from './categories.routes';
-import discountsRoutes from './discounts.routes'
+import discountsRoutes from './discounts.routes';
+import cartRoutes from './cart.routes';
 
 const router = Router();
 const upload = multer(uploadConfig.upload('./tmp'));
@@ -15,5 +16,6 @@ router.use('/roles', rolesRoutes);
 router.use('/products', productsRoutes);
 router.use('/categories', categoriesRoutes);
 router.use('/discounts', discountsRoutes);
+router.use('/cart', cartRoutes);
 
 export { router, upload };
