@@ -1,16 +1,16 @@
-import { Request, Response } from "express";
+import { request, Request, response, Response } from "express";
 import { UpdateProductService } from "../../services/product/UpdateProductService";
 import { validationResult } from "express-validator";
 
 class UpdateProductController {
-    async handle(request: Request, response: Response) {
-        const product_id = request.query.id as string;
-        const { name, description, price, stock_quantity, categories, discount_id } = request.body;
+    async handle(req: Request, res: Response) {
+        const product_id = req.params.id as string;
+        const { name, description, price, stock_quantity, categories, discount_id } = req.body;
 
-        const errors = validationResult(request);
+        const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-            return response.status(400).json({ errors: errors.array()[0].msg });  
+            return res.status(400).json({ errors: errors.array()[0].msg });  
         }
 
         let categoriesArray: string[] = [];
@@ -25,7 +25,7 @@ class UpdateProductController {
             name, description, price, image, stock_quantity, product_id, categoriesArray, discount_id
         })
 
-        return response.json(product);
+        return res.json(product);
     }
 }
 
