@@ -22,7 +22,10 @@ router.get('/:id', new ListDiscountController().handle);
 router.delete('/:id', new DeleteDiscountController().handle);
 
 router.patch('/:id', [
-    body('name').isString().notEmpty().optional().withMessage('Name is required'),
+    body('name').isString().notEmpty().withMessage('Name is required'),
+    body('description').isString().notEmpty().optional().withMessage('Description is required'),
+    body('value').isNumeric().notEmpty().withMessage('Value is required'),
+    body('discount_type').isString().notEmpty().withMessage('Discount type is required'),
 ], new UpdateDiscountController().handle);
 
 export default router;

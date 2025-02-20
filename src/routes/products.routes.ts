@@ -16,6 +16,7 @@ router.post('/', [
     body('description').isString().notEmpty().withMessage('Description is required'),
     body('price').isNumeric().notEmpty().withMessage('Price is required'),
     body('stock_quantity').isNumeric().notEmpty().withMessage('Stock quantity is required'),
+    body('categories').isString().notEmpty().withMessage('Categories is required'), 
 ], upload.single('file'), new CreateProductController().handle);
 
 router.get('/', new ListAllProductController().handle);

@@ -10,10 +10,11 @@ interface ProductRequest {
     image: string;
     stock_quantity: number;
     categoriesArray: any;
+    discount_id : number;
 }
 
 class UpdateProductService {
-    async execute({product_id, name, description, price, image, stock_quantity, categoriesArray}: ProductRequest) {
+    async execute({product_id, name, description, price, image, stock_quantity, categoriesArray, discount_id}: ProductRequest) {
         const productExists = await prismaClient.products.findFirst({
             where: {
                 id: Number(product_id)
@@ -54,7 +55,10 @@ class UpdateProductService {
                                 connect: { id: Number(categoryId)}
                             }
                         }))
-                    } : undefined
+                    } : undefined,
+                    discount: {
+                        connect: { id: Number(discount_id) }
+                    }
                 }
             });
             

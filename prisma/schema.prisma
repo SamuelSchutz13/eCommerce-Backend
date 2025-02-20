@@ -52,8 +52,9 @@ model Products {
   categories ProductCategory[]
   cart CartItems[]
   productOrder OrderItems[]
-  productsDiscounts  Favorites[]
+  favorites  Favorites[]
   reviews Reviews[]
+  discount Discount? @relation(fields: [discount_id], references: [id])
 }
 
 model Category {
@@ -114,6 +115,7 @@ model Discount {
   description String?
   discount_type String
   value Float
+  products Products[]
   createdAt DateTime? @default(now())
   updatedAt DateTime? @default(now())
 

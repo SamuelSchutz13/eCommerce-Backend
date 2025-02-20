@@ -4,7 +4,7 @@ import { UpdateProductService } from '../../services/product/UpdateProductServic
 class UpdateProductController {
     async handle(req: Request, res: Response) {
         const product_id = req.params.id as string;
-        const { name, description, price, stock_quantity, categories } = req.body;
+        const { name, description, price, stock_quantity, categories, discount_id } = req.body;
 
         const categoriesArray = categories.split(",");
         const updateProductService = new UpdateProductService();
@@ -14,7 +14,7 @@ class UpdateProductController {
         } else {
             const { originalname, filename: image } = req.file;
             const product = await updateProductService.execute({
-                name, description, price, stock_quantity, image, product_id, categoriesArray
+                name, description, price, stock_quantity, image, product_id, categoriesArray, discount_id
             })
  
             return res.json(product);
