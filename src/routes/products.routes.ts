@@ -24,11 +24,11 @@ router.get('/:id', new ListProductController().handle);
 
 router.delete('/:id', new DeleteProductController().handle);
 
-router.patch('/:id', [
+router.patch('/:id', upload.single('file'), [
     body('name').isString().notEmpty().withMessage('Name is required'),
     body('description').isString().notEmpty().withMessage('Description is required'),
     body('price').isNumeric().notEmpty().withMessage('Price is required'),
     body('stock_quantity').isNumeric().notEmpty().withMessage('Stock quantity is required'),
-], upload.single('file'), new UpdateProductController().handle);
+], new UpdateProductController().handle);
 
 export default router;
