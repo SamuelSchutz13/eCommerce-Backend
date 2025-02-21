@@ -1,0 +1,21 @@
+import { prismaClient } from "../../prisma";
+
+interface OrderRequest {
+    user_id: string;
+    order_id: string;
+}
+
+class ListOrderService {
+  async execute({ user_id, order_id }: OrderRequest) {
+    const order = await prismaClient.orders.findFirst({
+        where: {
+            id: Number(order_id),
+            user_id: user_id
+        }
+    });
+
+    return order;
+  }
+}
+
+export { ListOrderService };
