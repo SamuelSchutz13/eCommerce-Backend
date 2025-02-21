@@ -9,8 +9,11 @@ class ListOrderService {
   async execute({ user_id, order_id }: OrderRequest) {
     const order = await prismaClient.orders.findFirst({
         where: {
-            id: Number(order_id),
-            user_id: user_id
+          id: Number(order_id),
+          user_id: user_id
+        },
+        include: {
+          orderItems: true
         }
     });
 

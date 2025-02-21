@@ -16,6 +16,16 @@ class DeleteOrderService {
             throw new Error("Order does not exists!");
         }
 
+        if(orderAlreadyExists.status !== "Pendente") {
+            throw new Error("Order is pending and cannot be deleted!");
+        }
+
+        await prismaClient.orderItems.deleteMany({
+            where: {
+                order_id: Number(order_id)
+            }
+        });
+
         const order = await prismaClient.orders.delete({
             where: {
                 id: orderAlreadyExists.id
