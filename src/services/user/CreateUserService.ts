@@ -19,7 +19,7 @@ class CreateUserService {
 
         const userAlreadyExists = await prismaClient.user.findFirst({
             where: {
-            email
+                email: email
             }
         });
 

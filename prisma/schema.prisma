@@ -16,7 +16,7 @@ model User {
   updatedAt DateTime? @default(now())
   roles UserRole[]
   userCart CartItems[]
-  orders Orders[]
+  orders  Orders[]
   favorites Favorites[]
   reviews Reviews[]
 
