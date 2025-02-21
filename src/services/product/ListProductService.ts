@@ -8,8 +8,11 @@ class ListProductService {
   async execute({ product_id }: ProductRequest) {
     const product = await prismaClient.products.findUnique({
         where: {
-            id: Number(product_id),
-        },
+          id: Number(product_id),
+        }, 
+        include: {
+          reviews: true,
+        }
     });
 
     return product;
