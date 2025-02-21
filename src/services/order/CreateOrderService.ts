@@ -39,6 +39,23 @@ class CreateOrderService {
         }
     });
 
+    await Promise.all(cartItems.map(async function(item) {
+        const product = await prismaClient.products.findFirst({
+            where: {
+                id: item.product_id
+            }
+        });
+
+        await prismaClient.orderItems.create({
+            data: {
+                order_id: Number(order.id),
+                product_id: item.product_id,
+                quantity: item.quantity,
+                price_at_time: product.price
+            }
+        });
+    }));
+
     return order;
   }
 }

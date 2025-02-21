@@ -4,17 +4,23 @@ import { CreateOrderController } from '../controllers/order/CreateOrderControlle
 import { isAuthenticated } from '../middlewares/isAuthenticated';
 import { ListAllOrderController } from '../controllers/order/ListAllOrderController';
 import { ListOrderController } from '../controllers/order/ListOrderController';
+import { UpdateOrderController } from '../controllers/order/UpdateOrderController';
+import { DeleteOrderController } from '../controllers/order/DeleteOrderController';
 
 const router = Router();
 
 router.post('/', isAuthenticated, [
-    body('product_id').isString().notEmpty().withMessage('Product is required'),
     body('status').isString().notEmpty().withMessage('Status is required'),
-    body('total_price').isNumeric().notEmpty().withMessage('Customer is required'),
 ], new CreateOrderController().handle);
 
-router.get('/', new ListAllOrderController().handle);
+router.get('/', isAuthenticated, new ListAllOrderController().handle);
 
-router.get('/:id', new ListOrderController().handle);
+router.get('/:id', isAuthenticated, new ListOrderController().handle);
+
+router.patch('/:id', isAuthenticated, [
+    body('status').isString().notEmpty().withMessage('Status is required'),
+], new UpdateOrderController().handle);
+
+router.delete('/:id', isAuthenticated, new DeleteOrderController().handle);
 
 export default router;

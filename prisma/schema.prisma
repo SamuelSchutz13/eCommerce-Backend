@@ -103,8 +103,7 @@ model OrderItems {
   order_id Int
   product_id Int
   quantity Int
-  createdAt DateTime? @default(now())
-  updatedAt DateTime? @default(now())
+  price_at_time Decimal
   order Orders @relation(fields: [order_id], references: [id])
   product Products @relation(fields: [product_id], references: [id])
 }
